@@ -20,7 +20,7 @@ resource "aws_network_acl_rule" "public_allow_all_outbound_rule" {
   to_port        = 65535
 }
 
-resource "aws_network_acl_rule" "public_80" {
+resource "aws_network_acl_rule" "public_8080" {
   network_acl_id = aws_network_acl.public_network_acl.id
   rule_number    = 200
   protocol       = "tcp"
@@ -29,8 +29,7 @@ resource "aws_network_acl_rule" "public_80" {
   from_port      = 8080
   to_port        = 8080
 }
-
-resource "aws_network_acl_rule" "public_80_outbound" {
+resource "aws_network_acl_rule" "public_8080_outbound" {
   network_acl_id = aws_network_acl.public_network_acl.id
   rule_number    = 200
   protocol       = "tcp"
@@ -40,6 +39,27 @@ resource "aws_network_acl_rule" "public_80_outbound" {
   from_port      = 8080
   to_port        = 8080
 }
+resource "aws_network_acl_rule" "public_80_outbound" {
+  network_acl_id = aws_network_acl.public_network_acl.id
+  rule_number    = 250
+  protocol       = "tcp"
+  egress = true
+  rule_action    = "allow"
+  cidr_block     = "0.0.0.0/0"  
+  from_port      = 80
+  to_port        = 80
+}
+resource "aws_network_acl_rule" "public_80" {
+  network_acl_id = aws_network_acl.public_network_acl.id
+  rule_number    = 250
+  protocol       = "tcp"
+  rule_action    = "allow"
+  cidr_block     = "0.0.0.0/0"  
+  from_port      = 80
+  to_port        = 80
+}
+
+
 
 resource "aws_network_acl_rule" "public_443" {
   network_acl_id = aws_network_acl.public_network_acl.id
